@@ -22,6 +22,7 @@ pre_install() {
         (
           mkdir -p "/asdf/.asdf/installs/$tool_name"
           cd "/asdf/.asdf/installs/$tool_name"
+          echo "Downloading https://s3.amazonaws.com/asdf-pre/alpine/$tool_name/$tool_version.tgz ..."
           curl -L "https://s3.amazonaws.com/asdf-pre/alpine/$tool_name/$tool_version.tgz" | tar xz
         )
 
