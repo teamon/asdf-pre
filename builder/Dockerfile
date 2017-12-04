@@ -9,7 +9,8 @@ RUN apk add --update \
   ncurses-dev \
   ca-certificates \
   openssl-dev \
-  python
+  python \
+  linux-headers
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch v0.4.0 /asdf/.asdf
 ENV PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
