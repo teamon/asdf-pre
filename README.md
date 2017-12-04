@@ -25,7 +25,7 @@ RUN mkdir /app
 WORKDIR /app
 
 # install & cache tool dependencies
-ADD .tool-version ./
+ADD .tool-versions ./
 RUN asdf-pre install
 
 # install & cache app dependencies
