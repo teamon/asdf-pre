@@ -25,5 +25,8 @@ test:
 	docker build -t asdf-pre-test test
 	docker run --rm -it asdf-pre-test /bin/bash -c "elixir --version"
 
+ls:
+	aws s3 ls --recursive --human-readable "s3://asdf-pre"
 
-.PHONY: base base-build base-publish builder tool tool-package tool-upload test
+
+.PHONY: base base-build base-publish builder tool tool-package tool-upload test ls
