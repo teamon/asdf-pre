@@ -1,0 +1,61 @@
+#!/bin/bash
+
+set -e -o nounset -o pipefail
+
+source "/asdf/.asdf/lib/utils.sh"
+source "/asdf/.asdf/lib/commands/install.sh"
+
+pre_install() {
+  if [ -f "$(pwd)/.tool-versions" ]; then
+    local asdf_versions_path="$(pwd)/.tool-versions"
+
+    while read tool_line; do
+      IFS=' ' read -a tool_info <<< "$tool_line"
+      local tool_name=$(echo "${tool_info[0]}" | xargs)
+      local tool_version=$(echo "${tool_info[1]}" | xargs)
+
+      if ! [[ -z "$tool_name" || -z "$tool_version" ]]; then
+        # 1. install plugin
+        asdf plugin-add $tool_name
+
+        # 2. download precompiled package
+        (
+          mkdir -p "/asdf/.asdf/installs/$tool_name"
+          cd "/asdf/.asdf/installs/$tool_name"
+          curl -L "https://s3.amazonaws.com/asdf-pre/alpine/$tool_name/$tool_version.tgz" | tar xz
+        )
+
+        # 3. reshim
+        asdf reshim $tool_name
+
+        # 4. set this version as global
+        asdf global $tool_name $tool_version
+      fi
+    done < "$asdf_versions_path"
+  else
+    echo "Either specify a tool & version in the command"
+    echo "OR add .tool-versions file in this directory"
+    exit 1
+  fi
+}
+
+callback_args="${@:2}"
+
+case $1 in
+  install)
+    pre_install
+    ;;
+  *)
+    asdf $@;;
+esac
+
+
+# ADD erlang/20.1 /root/.asdf/installs/erlang/20.1/
+# RUN asdf plugin-add erlang
+# RUN asdf reshim erlang
+# RUN asdf global erlang 20.1
+#
+# ADD elixir/1.5.2-otp-20 /root/.asdf/installs/elixir/1.5.2-otp-20/
+# RUN asdf plugin-add elixir
+# RUN asdf reshim elixir
+# RUN asdf global elixir 1.5.2-otp-20
