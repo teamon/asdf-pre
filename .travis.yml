@@ -1,4 +1,4 @@
-language: generic
+language: minimal
 sudo: false
 services:
   - docker
@@ -13,12 +13,7 @@ env:
 
 install:
   - make builder
+  - pip install --user awscli
 
 script:
-  - make tool-build tool-package
-
-addons:
-  artifacts:
-    debug: true
-    paths:
-      - "_build/$TOOL/$VERSION.tgz"
+  - make tool-available || make tool

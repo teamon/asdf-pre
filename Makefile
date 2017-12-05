@@ -12,12 +12,15 @@ base-publish:
 builder:
 	docker build -t asdf-pre-builder builder
 
-tool: tool-build tool-package tool-upload
+tool: tool-package tool-upload
 
 tool-build: 	_build/$(TOOL)/$(VERSION)
 tool-package: _build/$(TOOL)/$(VERSION).tgz
 tool-upload:
 	aws s3 cp "_build/$(TOOL)/$(VERSION).tgz" "s3://asdf-pre/alpine/$(TOOL)/$(VERSION).tgz" --acl public-read
+
+tool-available:
+	aws s3 ls "s3://asdf-pre/alpine/$(TOOL)/$(VERSION).tgz"
 
 _build/$(TOOL)/$(VERSION):
 	mkdir -p "_build/$(TOOL)"
