@@ -26,7 +26,7 @@ _build/$(TOOL)/$(VERSION):
 	mkdir -p "_build/$(TOOL)"
 	docker run --rm -it -v "$$(pwd)/_build:/build" asdf-pre-builder "$(TOOL)" "$(VERSION)"
 
-_build/$(TOOL)/$(VERSION).tgz:
+_build/$(TOOL)/$(VERSION).tgz: _build/$(TOOL)/$(VERSION)
 	cd "_build/$(TOOL)" && tar czf "$(VERSION).tgz" "$(VERSION)"
 
 test:
@@ -35,8 +35,5 @@ test:
 
 ls:
 	aws s3 ls --recursive --human-readable "s3://asdf-pre"
-
-build-all:
-	./script/configure.sh && make -j 8 -f script/Makefile.tools all
 
 .PHONY: base base-build base-publish builder tool tool-package tool-upload test ls

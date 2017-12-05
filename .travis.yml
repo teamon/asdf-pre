@@ -7,6 +7,13 @@ cache:
   directories:
     - _build
 env:
+  - TOOL=elixir VERSION=1.4.0
+  - TOOL=elixir VERSION=1.4.1
+  - TOOL=elixir VERSION=1.4.2
+  - TOOL=elixir VERSION=1.4.3
+  - TOOL=elixir VERSION=1.4.4
+  - TOOL=elixir VERSION=1.4.5
+  - TOOL=elixir VERSION=1.5.0-otp-20
   - TOOL=elixir VERSION=1.5.0-otp-20
   - TOOL=elixir VERSION=1.5.1-otp-20
   - TOOL=elixir VERSION=1.5.2-otp-20
