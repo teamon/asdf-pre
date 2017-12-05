@@ -7,24 +7,18 @@ cache:
   directories:
     - _build
 env:
-  - TOOL=erlang VERSION=17.0
-  - TOOL=erlang VERSION=17.1
-  - TOOL=erlang VERSION=17.3
-  - TOOL=erlang VERSION=17.4
-  - TOOL=erlang VERSION=17.5
-  - TOOL=erlang VERSION=18.0
-  - TOOL=erlang VERSION=18.1
-  - TOOL=erlang VERSION=18.2.1
-  - TOOL=erlang VERSION=18.3
-  - TOOL=erlang VERSION=19.0
-  - TOOL=erlang VERSION=19.1
-  - TOOL=erlang VERSION=19.2
-  - TOOL=erlang VERSION=19.3
-  - TOOL=erlang VERSION=20.0
-  - TOOL=erlang VERSION=20.1
+  - TOOL=elixir VERSION=1.5.0-otp-20
+  - TOOL=elixir VERSION=1.5.1-otp-20
+  - TOOL=elixir VERSION=1.5.2-otp-20
 
 install:
   - make builder
 
 script:
   - make tool-build tool-package
+
+addons:
+  artifacts:
+    debug: true
+    paths:
+      - "_build/$TOOL/$VERSION.tgz"
