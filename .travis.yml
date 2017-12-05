@@ -7,6 +7,8 @@ cache:
   directories:
     - _build
 env:
+  - TOOL=elixir VERSION=1.3.3
+  - TOOL=elixir VERSION=1.3.4
   - TOOL=elixir VERSION=1.4.0
   - TOOL=elixir VERSION=1.4.1
   - TOOL=elixir VERSION=1.4.2
@@ -19,8 +21,7 @@ env:
   - TOOL=elixir VERSION=1.5.2-otp-20
 
 install:
-  - make builder
   - pip install --user awscli
 
 script:
-  - make tool-available || make tool
+  - make tool-available || make builder tool
