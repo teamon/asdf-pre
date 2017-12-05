@@ -22,6 +22,9 @@ tool-upload:
 tool-available:
 	aws s3 ls "s3://asdf-pre/alpine/$(TOOL)/$(VERSION).tgz"
 
+build-debug:
+	docker run --rm -it -v "$$(pwd)/_build:/build" --entrypoint /bin/bash asdf-pre-builder
+
 _build/$(TOOL)/$(VERSION):
 	mkdir -p "_build/$(TOOL)"
 	docker run --rm -it -v "$$(pwd)/_build:/build" asdf-pre-builder "$(TOOL)" "$(VERSION)"
@@ -30,8 +33,7 @@ _build/$(TOOL)/$(VERSION).tgz: _build/$(TOOL)/$(VERSION)
 	cd "_build/$(TOOL)" && tar czf "$(VERSION).tgz" "$(VERSION)"
 
 test:
-	docker build -t asdf-pre-test test
-	docker run --rm -it asdf-pre-test /bin/bash -c "elixir --version"
+	script/test.sh
 
 ls:
 	aws s3 ls --recursive --human-readable "s3://asdf-pre"

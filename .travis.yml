@@ -44,9 +44,10 @@ env:
   - TOOL=nodejs VERSION=8.8.1
   - TOOL=nodejs VERSION=8.9.1
   - TOOL=nodejs VERSION=9.2.0
-  
+
 install:
   - pip install --user awscli
 
 script:
   - make tool-available || make builder tool
+  - make test
