@@ -2,6 +2,7 @@ TOOL 		:= $(TOOL)
 VERSION := $(VERSION)
 IMAGE   := teamon/alpine-asdf-pre
 S3 			:= s3://asdf-pre/alpine
+S3_HTTP := https://asdf-pre.s3.amazonaws.com/alpine
 
 base: base-build base-publish
 
@@ -23,7 +24,7 @@ tool-upload:
 		--acl public-read
 
 tool-available:
-	aws s3 ls "$(S3)/$(TOOL)/$(VERSION).tgz"
+	curl --head --fail "$(S3_HTTP)/$(TOOL)/$(VERSION).tgz"
 
 debug:
 	mkdir -p "_build/$(TOOL)"
@@ -46,6 +47,9 @@ _build/$(TOOL)/$(VERSION).tgz: _build/$(TOOL)/$(VERSION)
 
 test:
 	script/test.sh
+
+travis-install:
+	pip install --user awscli
 
 ls:
 	aws s3 ls --recursive --human-readable $(S3)
