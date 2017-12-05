@@ -11,7 +11,7 @@ case $TOOL in
     command="node --version"
     ;;
   "elixir")
-    echo "erlang 20.1" > .tool-versions
+    echo "erlang $TEST_ERLANG_VERSION" > .tool-versions
     echo "elixir $VERSION" >> .tool-versions
     command="elixir --version"
     ;;
@@ -21,6 +21,6 @@ case $TOOL in
     ;;
 esac
 
-docker run --rm -it -v $(pwd):/test \
-  teamon/alpine-asdf-pre:3.6 \
+docker run --rm -v $(pwd):/test \
+  teamon/alpine-asdf-pre \
   /bin/bash -c "cd test && asdf-pre install && $command"

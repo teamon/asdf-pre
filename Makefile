@@ -1,6 +1,6 @@
 TOOL 		:= $(TOOL)
 VERSION := $(VERSION)
-IMAGE   := teamon/alpine-asdf-pre:3.6
+IMAGE   := teamon/alpine-asdf-pre
 S3 			:= s3://asdf-pre/alpine
 
 base: base-build base-publish
@@ -35,7 +35,7 @@ debug:
 
 _build/$(TOOL)/$(VERSION):
 	mkdir -p "_build/$(TOOL)"
-	docker run --rm -it \
+	docker run --rm \
 		-v "$$(pwd)/_build:/build" \
 		-v "$$(pwd)/script:/script" \
 		$(IMAGE) \
