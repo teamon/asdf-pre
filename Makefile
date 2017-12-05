@@ -14,15 +14,17 @@ builder:
 
 tool: tool-build tool-package tool-upload
 
-tool-build:
+tool-build: 	_build/$(TOOL)/$(VERSION)
+tool-package: _build/$(TOOL)/$(VERSION).tgz
+tool-upload:
+	aws s3 cp "_build/$(TOOL)/$(VERSION).tgz" "s3://asdf-pre/alpine/$(TOOL)/$(VERSION).tgz" --acl public-read
+
+_build/$(TOOL)/$(VERSION):
 	mkdir -p "_build/$(TOOL)"
 	docker run --rm -it -v "$$(pwd)/_build:/build" asdf-pre-builder "$(TOOL)" "$(VERSION)"
 
-tool-package:
+_build/$(TOOL)/$(VERSION).tgz:
 	cd "_build/$(TOOL)" && tar czf "$(VERSION).tgz" "$(VERSION)"
-
-tool-upload:
-	aws s3 cp "_build/$(TOOL)/$(VERSION).tgz" "s3://asdf-pre/alpine/$(TOOL)/$(VERSION).tgz" --acl public-read
 
 test:
 	docker build -t asdf-pre-test test
