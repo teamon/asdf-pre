@@ -49,5 +49,5 @@ install:
   - pip install --user awscli
 
 script:
-  - make tool-available || make builder tool
+  - make tool-available || make tool
   - make test

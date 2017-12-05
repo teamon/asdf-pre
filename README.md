@@ -71,12 +71,6 @@ Install dependencies
 brew install awscli
 ```
 
-Prepare builder image
-
-```bash
-make builder
-```
-
 Build tool
 
 ```bash
@@ -86,7 +80,7 @@ TOOL=elixir VERSION=1.5.2-otp-20 make tool
 Debug build
 
 ```bash
-make build-debug
+make debug
 # /root/build.sh TOOL VERSION
 bash-4.3# /root/build.sh erlang 18.1
 ```
