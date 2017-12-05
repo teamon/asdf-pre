@@ -18,6 +18,7 @@ case $TOOL in
   "erlang")
     echo "$TOOL $VERSION" > .tool-versions
     command="erl -eval 'halt()'"
+    ;;
   "ruby")
     echo "$TOOL $VERSION" > .tool-versions
     command="ruby --version"
