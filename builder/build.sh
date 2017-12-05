@@ -24,4 +24,8 @@ echo "==> Building $tool $src_version => $dst_version"
 asdf install $tool $src_version
 
 mkdir -p /build/$tool
+
+src_version=$(echo "$src_version" | sed 's/:/-/g')
+dst_version=$(echo "$dst_version" | sed 's/:/-/g')
+
 mv /asdf/.asdf/installs/$tool/$src_version /build/$tool/$dst_version
